@@ -1,0 +1,6 @@
+#!/bin/sh
+
+HOST=18.198.169.194
+CNAME=bugcontainer
+IMGNAME=nginx:bugsimage
+KEY=~/.ssh/awskey.pem
