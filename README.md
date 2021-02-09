@@ -51,4 +51,5 @@ Current state is:
 You can find our variables in `vars` file:
  
 CNAME - docker container name
+
 IMGNAME - docker image name
