@@ -1,0 +1,13 @@
+---
+- hosts: all
+  remote_user: ubuntu
+  become: true
+  vars:
+  tasks:
+    - name: Install laest Nginx version
+      apt: name=nginx state=latest
+   
+    - name: Starting Nginx
+      service:
+        name: nginx
+        state: started
