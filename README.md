@@ -1,65 +1,31 @@
 # 1. Description
-We are using Docker and Bash for a small site deploying 
+We are using Ansible and Makefile to manage remote web-server
 
-
-# 2. Requirements
-**apt**
-- make
-- [docker](https://docs.docker.com/engine/install/ubuntu/)
-- [nginx docker image](https://hub.docker.com/_/nginx)
-- wget
-
-# 3. How to use
-First of all, we need to export required variables:
-
-```bash
-export DOCKER_HOST=YOURIPADDR
-```
-You can add SSH Key if it's required for a SSH connection to remote server:
+# 2. How to use
+You need to be sure that you have access to remote server. More likely, I'd sugges to add with next command:
 ```bash
 ssh-add path/to/your/key
 ```
-Now all your Docker commands will run on remote host, as well when you'll use ``make`` command to utilize ``bash`` scripts.
+where **path/to/your/key** is a path to your SSH Key
+***
 
-Now you need to use:
-- To sync with remote site
-    ```bash
-    make sync
-    ```
-
-- To automatically deploy container on remote host
+- Firstly, you need to install and deploy everything on remote web-server:
     ```bash
     make deploy
     ```
+    Ansible will ask you regarding what exactly lanugage version of site you'd like to deploy. By default it's ```all``` 
+    To sync specific remote site with specific language, you need to enter ```en``` or another language shortcut.
     
-- To manually start container on remote host
+- To manage Nginx, you can run:
     ```bash
-    make start
+    make nginx
     ```
-    
-- To manually stop container on remote host
-    ```bash
-    make stop
-    ```
-    
-***
-# Utilities
+    You can operate with it by entering one of the states below:
+    - start
+    - stop
+    - restart
 
-We are using crontab for a mirror actualize purposes. To change current state, you need to use:
-```bash
-crontab -e
-```
-And edit.
+# 4. Utilities
 
-Current state is:
-```bash
-45 3 * * 6 cd /path/to/your/makefile/ make sync
-```
-
-# Variables
-
-You can find our variables in `vars` file:
- 
-CNAME - docker container name
-
-IMGNAME - docker image name
+If you'll need to change IP address of remote host, you need to change in invetory file ```inv_bugs```. 
+```NGINX``` configuration places in ```conf/``` folder.
