@@ -3,7 +3,6 @@
   remote_user: ubuntu
   become: true
   vars_prompt:
-  
     - name: language
       default: all
       private: no
