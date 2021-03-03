@@ -1,0 +1,67 @@
+---
+- hosts: all
+  remote_user: ubuntu
+  become: true
+  vars_prompt:
+    - name: language
+      default: all
+      private: no
+       
+  tasks:
+    - name: Install latest Nginx version
+      apt: name=nginx state=latest
+
+    - name: Remove defualt nginx conf
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Copy nginx configuration
+      copy:
+        src: conf/bugs_nginx.conf
+        dest: /etc/nginx/sites-enabled/bugs_nginx.conf
+   
+    - name: Starting Nginx
+      service:
+        name: nginx
+        state: restarted
+
+    - name: Create site path
+      file:
+        path: /var/www/bugs
+        state: directory
+   
+
+    - name: Syncing all site versions
+      get_url:
+        url: https://www.chiark.greenend.org.uk/~sgtatham/{{ item }}.html
+        dest: /var/www/bugs
+      with_items:
+        - bugs
+        - bugs-ru
+        - bugs-it
+        - bugs-cz
+        - bugs-br
+        - bugs-cn
+        - bugs-da
+        - bugs-de
+        - bugs-es
+        - bugs-fr
+        - bugs-hu
+        - bugs-jp
+        - bugs-nl
+        - bugs-pl
+        - bugs-tw
+      when: language == "all"
+    
+    - name: Syncing {{ language }} version site
+      get_url:
+       url: https://www.chiark.greenend.org.uk/~sgtatham/bugs.html
+       dest: /var/www/bugs
+      when: language == "en"
+
+    - name: Syncing {{ language }} version site
+      get_url:
+        url: https://www.chiark.greenend.org.uk/~sgtatham/bugs-{{ language }}.html
+        dest: /var/www/bugs
+      when: language != "all" and language != "en"

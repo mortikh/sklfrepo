@@ -1,0 +1,20 @@
+---
+- hosts: all
+  remote_user: ubuntu
+  become: true
+  vars_prompt:
+    - name: state
+      private: no
+  
+  tasks:  
+    - name: Starting Nginx
+      service: name=nginx state=started
+      when: state == "start"
+
+    - name: Stopping Nginx
+      service: name=nginx state=stopped
+      when: state == "stop"
+
+    - name: Restarting Nginx
+      service: name=nginx state=restarted
+      when: state == "restart"
