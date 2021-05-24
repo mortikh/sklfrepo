@@ -1,9 +1,9 @@
 name: SQL Script
+on: [push]
 
-on:
-  push:
-    branches:
-    - script_dev
-jobs: 
+jobs:
+  build:
+    name: Test, Run
+    runs-on: windows-latest
     steps:
       - run: mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rfam < script.sql
