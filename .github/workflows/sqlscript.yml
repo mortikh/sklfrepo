@@ -1,0 +1,13 @@
+name: SQL Script
+
+mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rfam < script.sql
+
+on:
+  push:
+    branches: [ script_dev ]
+
+jobs:
+    steps:
+
+      - name: Run a one-line script
+        run: mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rfam < script.sql
