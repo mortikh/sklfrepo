@@ -4,7 +4,8 @@ mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rf
 
 on:
   push:
-    branches: [ script_dev ]
+    branches:
+    - script_dev
 
 jobs:
     steps:
