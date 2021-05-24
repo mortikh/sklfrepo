@@ -6,4 +6,5 @@ jobs:
     name: Test, Run
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - run: mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rfam < script.sql
